@@ -2,7 +2,7 @@ from django.urls import reverse as django_reverse
 from django.template import Library#, Node
 #from django.template.base import Variable, VariableDoesNotExist
 from django.utils.safestring import mark_safe
-from ..util import buildurlparameters, push
+from ..util import buildurlparameters
 from ..options import DEFAULT_HX_SWAP_DELAYED, DEFAULT_HX_TARGET_ID, DEFAULT_HX_ATTRS, AUTO_PUSH, HTMX_ENABLED
 
 
@@ -75,18 +75,6 @@ def htmx(method, url=None, reverse: bool = False, skip_push: bool = False, **kwa
 #         return self.nodelist.render(context)
 #     
 
-
-@register.simple_tag(takes_context=True)
-def allow_htmx_pushing(context, allow_pushing=False):
-    """
-    Allow pushing for a given request.
-    """
-    if "request" not in context:
-        return ""
-    
-    request = context["request"]
-    push(request, allow_pushing=allow_pushing)
-    return ""
 
 @register.simple_tag(takes_context=True)
 def buildurlparams(context, include_path=False, **kwargs):
